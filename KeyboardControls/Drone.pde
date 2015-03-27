@@ -65,7 +65,6 @@ class Drone
 		try 
 		{
 			commandManager.takeOff().doFor(2000);
-			println("take off");
 		}
 
 		catch(Exception ex)
@@ -82,7 +81,6 @@ class Drone
 		try
 		{
 			commandManager.landing();
-			println("landing");
 		}
 
 		catch(Exception ex)
@@ -99,7 +97,6 @@ class Drone
 		try 
 		{
 			commandManager.hover();
-			println("hover");
 		}
 
 		catch(Exception ex)
