@@ -11,5 +11,5 @@ Uitleg bij de applicaties:
   -   A: stijgen.
   -   Z: dalen.
 
-- MouseControls: applicatie waarmee je op het canvas tekeningen kan maken. Om het eenvoudig te houden, worden alle lijnen automatisch gesnapt naar rechten in X en Y.
+- MouseControls: applicatie waarmee je op het canvas tekeningen kan maken. Om het eenvoudig te houden, worden alle lijnen automatisch gesnapt naar rechten in X en Y. Ronde patronen worden automatisch gesnapt naar een overeenkomstige cirkel.
   -   CTRL: laat toe om rechten evenwijdig met de x-as en de y-as te tekenen. Zie analogie met Photoshop.
