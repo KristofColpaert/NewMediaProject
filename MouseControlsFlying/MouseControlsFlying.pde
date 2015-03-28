@@ -30,7 +30,7 @@ void setup()
 */
 void draw()
 {
-	//drone.hover();
+	drone.hover();
 	detectMousePoints();
 	drawShape();
 }
