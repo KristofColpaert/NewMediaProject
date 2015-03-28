@@ -251,16 +251,14 @@ void keyPressed()
 {
 	if(key == 'a')
 	{
-		ArrayList<PVector> currentPath = positionArrays.get(0);
-		println(positionArrays);
-		if(currentPath.isEmpty())
+		if(!positionArrays.isEmpty())
 		{
-			currentPath = positions;
-		}
+			ArrayList<PVector> currentPath = positionArrays.get(0);
 
-		if(currentPath.size() == 2)
-		{
-			flyLine(currentPath);
+			if(currentPath.size() == 2)
+			{
+				flyLine(currentPath);
+			}
 		}
 	}
 }
@@ -270,7 +268,6 @@ void keyPressed()
 */
 void flyLine(ArrayList<PVector> currentPath)
 {
-	println("hier");
 	// Calculate speed en duration of the movement.
 	PVector firstPosition = currentPath.get(0);
 	PVector lastPosition = currentPath.get(1);
