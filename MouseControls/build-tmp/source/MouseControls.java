@@ -96,6 +96,24 @@ public void detectMousePoints()
 		positions.add(newPVector);
 	}
 
+	else if(keyPressed == true)
+	{
+		if(keyCode == CONTROL)
+		{
+			println("hier");
+			snapPointsHorizontalVertical();
+			positionArrays.add(positions);
+			positions = new ArrayList<PVector>();
+		}
+
+		else
+		{
+			snapPoints();
+			positionArrays.add(positions);
+			positions = new ArrayList<PVector>();
+		}
+	}
+
 	else 
 	{
 		snapPoints();
@@ -108,9 +126,9 @@ public void detectMousePoints()
 */
 public void drawLine()
 {
-	if(positions.size() > 2)
+	if(positions.size() > 1)
 	{
-		for(int i = 0, l = positions.size() - 2; i < l; i++)
+		for(int i = 0, l = positions.size() - 1; i < l; i++)
 		{
 			PVector currentPosition = positions.get(i);
 			PVector previousPosition = positions.get(i + 1);
@@ -126,7 +144,7 @@ public void drawPreviousLines()
 {
 	for(ArrayList<PVector> positionArray : positionArrays)
 	{
-		for(int i = 0, l = positionArray.size() - 2; i < l; i++)
+		for(int i = 0, l = positionArray.size() - 1; i < l; i++)
 		{
 			PVector currentPosition = positionArray.get(i);
 			PVector previousPosition = positionArray.get(i + 1);
@@ -146,27 +164,42 @@ public void snapPoints()
 		PVector firstPosition = positions.get(0);
 		PVector lastPosition = positions.get(positions.size() - 1);
 
+		positions = new ArrayList<PVector>();
+		positions.add(firstPosition);
+		positions.add(lastPosition);
+
+		drawBackground();
+		drawLine();
+		drawPreviousLines();
+	}
+}
+
+/*
+** Method to snap point to a horizontal or vertical line.
+*/
+public void snapPointsHorizontalVertical()
+{
+	if(positions.size() > 1)
+	{
+		PVector firstPosition = positions.get(0);
+		PVector lastPosition = positions.get(positions.size() - 1);
+
 		float xDifference = Math.abs(firstPosition.x - lastPosition.x);
 		float yDifference = Math.abs(firstPosition.y - lastPosition.y);
 
-		println(xDifference);
-		println(yDifference);
-
 		if(xDifference > yDifference)
 		{
-			for(PVector position : positions)
-			{
-				position.y = firstPosition.y;
-			}
+			lastPosition.y = firstPosition.y;
 		}
 
-		else
+		else 
 		{
-			for(PVector position : positions)
-			{
-				position.x = firstPosition.x;
-			}	
+			lastPosition.x = firstPosition.x;	
 		}
+
+		positions = new ArrayList<PVector>();
+		positions.add(firstPosition);
+		positions.add(lastPosition);
 
 		drawBackground();
 		drawLine();
