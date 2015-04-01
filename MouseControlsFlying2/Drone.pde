@@ -18,7 +18,7 @@ class Drone
 		{
 			newDrone = new ARDrone();
 			newDrone.start();
-			newDrone.setMaxAltitude(5000);
+			newDrone.setMaxAltitude(2000);
 
 			commandManager = newDrone.getCommandManager();
 		}
@@ -108,11 +108,12 @@ class Drone
 	/*
 	** Method to let the drone ascend.
 	*/
-	void up()
+	void up(int speed, int timespan)
 	{
 		try 
 		{
-			commandManager.up(20).doFor(1);
+			commandManager.up(speed).doFor(timespan);
+			println("up");
 		}
 
 		catch(Exception ex)
@@ -124,11 +125,12 @@ class Drone
 	/*
 	** Method to let the drone descend.
 	*/
-	void down()
+	void down(int speed, int timespan)
 	{
 		try 
 		{
-			commandManager.down(20).doFor(1);
+			commandManager.down(speed).doFor(timespan);
+			println("down");
 		}
 
 		catch(Exception ex)
@@ -140,11 +142,12 @@ class Drone
 	/*
 	** Method to let the drone move forward.
 	*/
-	void forward()
+	void forward(int speed, int timespan)
 	{
 		try 
 		{
-			commandManager.forward(20).doFor(1);	
+			commandManager.forward(speed).doFor(timespan);	
+			println("forward");
 		}
 
 		catch(Exception ex)
@@ -156,11 +159,12 @@ class Drone
 	/*
 	** Method to let the drone move backward.
 	*/
-	void backward()
+	void backward(int speed, int timespan)
 	{
 		try
 		{
-			commandManager.backward(20).doFor(1);
+			commandManager.backward(speed).doFor(timespan);
+			println("backward");
 		}
 
 		catch(Exception ex)
@@ -172,11 +176,12 @@ class Drone
 	/*
 	** Method to let the drone move left.
 	*/
-	void left()
+	void left(int speed, int timespan)
 	{
 		try 
 		{
-			commandManager.goLeft(20).doFor(1);	
+			commandManager.goLeft(speed).doFor(timespan);
+			println("left");	
 		}
 
 		catch(Exception ex)
@@ -188,11 +193,12 @@ class Drone
 	/*
 	** Method to let the drone move right.
 	*/
-	void right()
+	void right(int speed, int timespan)
 	{
 		try
 		{
-			commandManager.goRight(20).doFor(1);
+			commandManager.goRight(speed).doFor(timespan);
+			println("right");
 		}
 
 		catch(Exception ex)

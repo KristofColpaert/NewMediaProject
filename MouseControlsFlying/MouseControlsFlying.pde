@@ -261,6 +261,16 @@ void keyPressed()
 			}
 		}
 	}
+
+	else if(keyCode == SHIFT)
+	{
+			drone.takeOff();
+	}
+
+	else if(keyCode == ALT)
+	{
+		drone.landing();
+	}
 }
 
 /*
@@ -281,7 +291,11 @@ void flyLine(ArrayList<PVector> currentPath)
 		 xyRelationship = xDifference / yDifference;
 	}
 
-	int timespan = Math.round(xDifference);
+	int timespanX = Math.round(xDifference);
+	int timespanY = Math.round(yDifference);
+	timespanX = timespanX * 6;
+	timespanY = timespanY * 6;
+
 	int xSpeed;
 	if(xDifference != 0)
 	{
@@ -317,7 +331,7 @@ void flyLine(ArrayList<PVector> currentPath)
 	if(firstPosition.x < lastPosition.x && firstPosition.y > lastPosition.y)
 	{
 		int currentTime = millis();
-		while(millis() <= currentTime + timespan)
+		while(millis() <= currentTime + timespanX)
 		{
 			drone.right(xSpeed, 1);
 			drone.up(ySpeed, 1);
@@ -330,7 +344,7 @@ void flyLine(ArrayList<PVector> currentPath)
 	else if(firstPosition.x < lastPosition.x && firstPosition.y < lastPosition.y)
 	{
 		int currentTime = millis();
-		while(millis() <= currentTime + timespan)
+		while(millis() <= currentTime + timespanX)
 		{
 			drone.right(xSpeed, 1);
 			drone.down(ySpeed, 1);
@@ -343,7 +357,7 @@ void flyLine(ArrayList<PVector> currentPath)
 	else if(firstPosition.x > lastPosition.x && firstPosition.y > lastPosition.y)
 	{
 		int currentTime = millis();
-		while(millis() <= currentTime + timespan)
+		while(millis() <= currentTime + timespanX)
 		{
 			drone.left(xSpeed, 1);
 			drone.down(ySpeed, 1);
@@ -356,7 +370,7 @@ void flyLine(ArrayList<PVector> currentPath)
 	else if(firstPosition.x > lastPosition.x && firstPosition.y < lastPosition.y)
 	{
 		int currentTime = millis();
-		while(millis() <= currentTime + timespan)
+		while(millis() <= currentTime + timespanX)
 		{
 			drone.left(xSpeed, 1);
 			drone.up(ySpeed, 1);
@@ -369,7 +383,7 @@ void flyLine(ArrayList<PVector> currentPath)
 	else if(firstPosition.x < lastPosition.x && firstPosition.y == lastPosition.y)
 	{
 		int currentTime = millis();
-		while(millis() <= currentTime + timespan)
+		while(millis() <= currentTime + timespanX)
 		{
 			drone.right(xSpeed, 1);
 			println(xSpeed);
@@ -380,7 +394,7 @@ void flyLine(ArrayList<PVector> currentPath)
 	else if(firstPosition.x > lastPosition.x && firstPosition.y == lastPosition.y)
 	{
 		int currentTime = millis();
-		while(millis() <= currentTime + timespan)
+		while(millis() <= currentTime + timespanX)
 		{
 			drone.left(xSpeed, 1);
 			println(xSpeed);
@@ -391,7 +405,7 @@ void flyLine(ArrayList<PVector> currentPath)
 	else if(firstPosition.x == lastPosition.x && firstPosition.y < lastPosition.y)
 	{
 		int currentTime = millis();
-		while(millis() <= currentTime + timespan)
+		while(millis() <= currentTime + timespanY)
 		{
 			drone.down(ySpeed, 1);
 			println(ySpeed);
@@ -402,7 +416,7 @@ void flyLine(ArrayList<PVector> currentPath)
 	else if(firstPosition.x == lastPosition.x && firstPosition.y > lastPosition.y)
 	{
 		int currentTime = millis();
-		while(millis() <= currentTime + timespan)
+		while(millis() <= currentTime + timespanY)
 		{
 			drone.up(ySpeed, 1);
 			println(ySpeed);

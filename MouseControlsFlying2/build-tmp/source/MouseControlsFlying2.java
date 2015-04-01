@@ -40,7 +40,7 @@ import java.io.InputStream;
 import java.io.OutputStream; 
 import java.io.IOException; 
 
-public class MouseControlsFlying extends PApplet {
+public class MouseControlsFlying2 extends PApplet {
 
 Drone drone;
 ArrayList<ArrayList<PVector>> positionArrays;
@@ -98,31 +98,10 @@ public void detectMousePoints()
 		positions.add(newPVector);
 	}
 
-	else if(keyPressed == true && mousePressed == false)
-	{
-		if(keyCode == CONTROL && !positions.isEmpty())
-		{
-			snapPointsHorizontalVertical();
-			positionArrays.add(positions);
-			positions = new ArrayList<PVector>();
-		}
-
-		else
-		{
-			if(!positions.isEmpty())
-			{
-				snapPoints();
-				positionArrays.add(positions);
-				positions = new ArrayList<PVector>();
-			}
-		}
-	}
-
 	else 
 	{
 		if(!positions.isEmpty())
 		{
-			snapPoints();
 			positionArrays.add(positions);
 			positions = new ArrayList<PVector>();
 		}
@@ -172,68 +151,6 @@ public void drawPreviousShapes()
 
 			ellipse(center.x, center.y, ellipseWidth, ellipseHeight);
 		}
-	}
-}
-
-/*
-** Method to snap points to one shape.
-*/
-public void snapPoints()
-{
-	if(positions.size() > 1)
-	{
-		PVector firstPosition = positions.get(0);
-		PVector lastPosition = positions.get(positions.size() - 1);
-
-		float xDifference = Math.abs(firstPosition.x - lastPosition.x);
-		float yDifference = Math.abs(firstPosition.y - lastPosition.y);
-
-		if(xDifference < 10 && yDifference < 10)
-		{
-			snapCircle();
-			return;
-		}
-
-		positions = new ArrayList<PVector>();
-		positions.add(firstPosition);
-		positions.add(lastPosition);
-
-		drawBackground();
-		drawShape();
-		drawPreviousShapes();
-	}
-}
-
-/*
-** Method to snap points to a horizontal or vertical line.
-*/
-public void snapPointsHorizontalVertical()
-{
-	if(positions.size() > 1)
-	{
-		PVector firstPosition = positions.get(0);
-		PVector lastPosition = positions.get(positions.size() - 1);
-
-		float xDifference = Math.abs(firstPosition.x - lastPosition.x);
-		float yDifference = Math.abs(firstPosition.y - lastPosition.y);
-
-		if(xDifference > yDifference)
-		{
-			lastPosition.y = firstPosition.y;
-		}
-
-		else 
-		{
-			lastPosition.x = firstPosition.x;	
-		}
-
-		positions = new ArrayList<PVector>();
-		positions.add(firstPosition);
-		positions.add(lastPosition);
-
-		drawBackground();
-		drawShape();
-		drawPreviousShapes();
 	}
 }
 
@@ -298,11 +215,7 @@ public void keyPressed()
 		if(!positionArrays.isEmpty())
 		{
 			ArrayList<PVector> currentPath = positionArrays.get(0);
-
-			if(currentPath.size() == 2)
-			{
-				flyLine(currentPath);
-			}
+			flyLine(currentPath);
 		}
 	}
 
@@ -322,150 +235,7 @@ public void keyPressed()
 */
 public void flyLine(ArrayList<PVector> currentPath)
 {
-	// Calculate speed en duration of the movement.
-	PVector firstPosition = currentPath.get(0);
-	PVector lastPosition = currentPath.get(1);
-
-	float xDifference = Math.abs(firstPosition.x - lastPosition.x);
-	float yDifference = Math.abs(firstPosition.y - lastPosition.y);
-
-	float xyRelationship = 0;
-	if(yDifference != 0)
-	{	
-		 xyRelationship = xDifference / yDifference;
-	}
-
-	int timespanX = Math.round(xDifference);
-	int timespanY = Math.round(yDifference);
-	timespanX = timespanX * 7;
-	timespanY = timespanY * 7;
-
-	int xSpeed;
-	if(xDifference != 0)
-	{
-		xSpeed = 20;
-	}
-
-	else
-	{
-		xSpeed = 0;	
-	}
-
-	int ySpeed;
-	if(yDifference != 0)
-	{
-		ySpeed = Math.round(xSpeed / xyRelationship);
-	}
-
-	else if(xyRelationship == 0)
-	{
-		ySpeed = 20;
-	}
-
-	else 
-	{
-		ySpeed = 0;
-	}
-
-	/*
-	** Make the drone move in the right direction.
-	*/
-
-	// Left to right && down to up.
-	if(firstPosition.x < lastPosition.x && firstPosition.y > lastPosition.y)
-	{
-		int currentTime = millis();
-		while(millis() <= currentTime + timespanX)
-		{
-			drone.right(xSpeed, 1);
-			drone.up(ySpeed, 1);
-			println(xSpeed);
-			println(ySpeed);
-		}
-	}
-
-	// Left to right && up to down.
-	else if(firstPosition.x < lastPosition.x && firstPosition.y < lastPosition.y)
-	{
-		int currentTime = millis();
-		while(millis() <= currentTime + timespanX)
-		{
-			drone.right(xSpeed, 1);
-			drone.down(ySpeed, 1);
-			println(xSpeed);
-			println(ySpeed);
-		}
-	}
-
-	// Right to left && down to up.
-	else if(firstPosition.x > lastPosition.x && firstPosition.y > lastPosition.y)
-	{
-		int currentTime = millis();
-		while(millis() <= currentTime + timespanX)
-		{
-			drone.left(xSpeed, 1);
-			drone.down(ySpeed, 1);
-			println(xSpeed);
-			println(ySpeed);
-		}
-	}
-
-	// Right to left && up to down.
-	else if(firstPosition.x > lastPosition.x && firstPosition.y < lastPosition.y)
-	{
-		int currentTime = millis();
-		while(millis() <= currentTime + timespanX)
-		{
-			drone.left(xSpeed, 1);
-			drone.up(ySpeed, 1);
-			println(xSpeed);
-			println(ySpeed);
-		}
-	}
-
-	// Left to right && horizontal.
-	else if(firstPosition.x < lastPosition.x && firstPosition.y == lastPosition.y)
-	{
-		int currentTime = millis();
-		while(millis() <= currentTime + timespanX)
-		{
-			drone.right(xSpeed, 1);
-			println(xSpeed);
-		}
-	}
-
-	// Right to left && horizontal.
-	else if(firstPosition.x > lastPosition.x && firstPosition.y == lastPosition.y)
-	{
-		int currentTime = millis();
-		while(millis() <= currentTime + timespanX)
-		{
-			drone.left(xSpeed, 1);
-			println(xSpeed);
-		}
-	}
-
-	// Up to down && vertical.
-	else if(firstPosition.x == lastPosition.x && firstPosition.y < lastPosition.y)
-	{
-		int currentTime = millis();
-		while(millis() <= currentTime + timespanY)
-		{
-			drone.down(ySpeed, 1);
-			println(ySpeed);
-		}
-	}
-
-	// Down to up && vertical.
-	else if(firstPosition.x == lastPosition.x && firstPosition.y > lastPosition.y)
-	{
-		int currentTime = millis();
-		while(millis() <= currentTime + timespanY)
-		{
-			drone.up(ySpeed, 1);
-			println(ySpeed);
-		}
-	}
+	
 
 	drone.hover();
 
@@ -684,7 +454,7 @@ class Drone
 	}
 }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "MouseControlsFlying" };
+    String[] appletArgs = new String[] { "MouseControlsFlying2" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
