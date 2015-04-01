@@ -219,9 +219,10 @@ public void keyPressed()
 		}
 	}
 
-	else if(keyCode == SHIFT)
+	else if(keyCode == CONTROL)
 	{
-			drone.takeOff();
+		println("hier");
+		drone.takeOff();
 	}
 
 	else if(keyCode == ALT)

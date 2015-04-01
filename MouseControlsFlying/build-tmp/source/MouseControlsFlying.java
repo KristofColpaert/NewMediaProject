@@ -337,8 +337,8 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 	int timespanX = Math.round(xDifference);
 	int timespanY = Math.round(yDifference);
-	timespanX = timespanX * 7;
-	timespanY = timespanY * 7;
+	timespanX = timespanX * 6;
+	timespanY = timespanY * 6;
 
 	int xSpeed;
 	if(xDifference != 0)
