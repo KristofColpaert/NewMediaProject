@@ -37,7 +37,7 @@ public void setup() {
 	smooth();
 	fill(0xffF2DA63);
 	stroke(0xffE85E00);
-	strokeWeight(10);
+	strokeWeight(11);
 
 	background(0xff333333);
 
@@ -53,12 +53,20 @@ public void draw() {
 	
 	if (f.isValid() && drawing) {
 		cPos = leap.getTip(f);
+		int top = path.size() - 1;
 
-		path.add(cPos);
-
-		for (int i = path.size() - 1 ; i > 0; i--) {
-			line(path.get(i).x, path.get(i).y, path.get(i - 1).x, path.get(i - 1).y);
+		if (top >= 0) {
+			line(cPos.x, cPos.y, path.get(top).x, path.get(top).y);
 		}
+		path.add(cPos);
+	}
+}
+
+public void keyPressed() {
+	if (key == 'R' || key == 'r') {
+		cPos = null;
+		path = new ArrayList<PVector>();
+		background(0xff333333);
 	}
 }
 
