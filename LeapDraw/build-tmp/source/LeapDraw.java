@@ -25,11 +25,8 @@ public class LeapDraw extends PApplet {
 PVector cPos;
 ArrayList<PVector> trail;
 int trailSize = 20;
-
 Controller c = new Controller();
-
 Frame f;
-
 LeapMotionP5 leap;
 
 public void setup() {
@@ -43,22 +40,22 @@ public void setup() {
 	fill(0xffF2DA63);
 	stroke(0xffE85E00);
 	strokeWeight(10);
-
+	
+	background(0xff333333);
 }
 
 public void draw() {
-	background(0xff333333);
 	Finger f = c.frame().fingers().frontmost();
-	println("f: "+f);
+	
 	if (f.isValid()) {
 		cPos = leap.getTip(f);	
-		if (trail.size() < trailSize) {
+		//if (trail.size() < trailSize) {
 			trail.add(cPos);
-		}
-		else {
-			trail = new ArrayList<PVector>(trail.subList(1, trailSize - 1));
-			trail.add(cPos);
-		}
+		//}
+		// else {
+		// 	trail = new ArrayList<PVector>(trail.subList(1, trailSize - 1));
+		// 	trail.add(cPos);
+		// }
 	
 		for (int i = trail.size() - 2 ; i > 0; i--) {
 			line(trail.get(i).x, trail.get(i).y, trail.get(i - 1).x, trail.get(i - 1).y);
