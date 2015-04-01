@@ -231,11 +231,86 @@ public void keyPressed()
 }
 
 /*
-** Method to make the drone fly a straight line.
+** Method to make the drone fly a line.
 */
 public void flyLine(ArrayList<PVector> currentPath)
 {
-	
+	for(int i = 0, j = currentPath.size() - 5; i < j; i += 5)
+	{
+		PVector currentVector = currentPath.get(i);
+		PVector nextVector = currentPath.get(i + 5);
+
+		float xDifference = currentVector.x - nextVector.x;
+		float yDifference = currentVector.y - nextVector.y;
+
+		if(xDifference > 0 && yDifference > 0)
+		{
+			int timespan = 1000;
+			float xSpeed = map(xDifference, 0, 1200, 0, 100);
+			float ySpeed = map(yDifference, 0, 1200, 0, 100);
+
+			int intXSpeed = Math.round(xSpeed);
+			int intYSpeed = Math.round(ySpeed);
+
+			int currentTime = millis();
+			while(millis() < currentTime + timespan)
+			{
+				drone.left(intXSpeed, 1);
+				drone.up(intYSpeed, 1);
+			}
+		}
+
+		else if(xDifference > 0 && yDifference < 0)
+		{
+			int timespan = 1000;
+			float xSpeed = map(xDifference, 0, 1200, 0, 100);
+			float ySpeed = map(yDifference, 0, 1200, 0, 100);
+
+			int intXSpeed = Math.round(xSpeed);
+			int intYSpeed = Math.round(ySpeed);
+
+			int currentTime = millis();
+			while(millis() < currentTime + timespan)
+			{
+				drone.left(intXSpeed, 1);
+				drone.down(intYSpeed, 1);
+			}
+		}
+
+		else if(xDifference < 0 && yDifference > 0)
+		{
+			int timespan = 1000;
+			float xSpeed = map(xDifference, 0, 1200, 0, 100);
+			float ySpeed = map(yDifference, 0, 1200, 0, 100);
+
+			int intXSpeed = Math.round(xSpeed);
+			int intYSpeed = Math.round(ySpeed);
+
+			int currentTime = millis();
+			while(millis() < currentTime + timespan)
+			{
+				drone.right(intXSpeed, 1);
+				drone.up(intYSpeed, 1);
+			}
+		}
+
+		else if(xDifference < 0 && yDifference < 0)
+		{
+			int timespan = 1000;
+			float xSpeed = map(xDifference, 0, 1200, 0, 100);
+			float ySpeed = map(yDifference, 0, 1200, 0, 100);
+
+			int intXSpeed = Math.round(xSpeed);
+			int intYSpeed = Math.round(ySpeed);
+
+			int currentTime = millis();
+			while(millis() < currentTime + timespan)
+			{
+				drone.right(intXSpeed, 1);
+				drone.down(intYSpeed, 1);
+			}
+		}
+	}
 
 	drone.hover();
 
