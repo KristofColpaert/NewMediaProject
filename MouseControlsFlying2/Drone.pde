@@ -18,7 +18,7 @@ class Drone
 		{
 			newDrone = new ARDrone();
 			newDrone.start();
-			newDrone.setMaxAltitude(2000);
+			newDrone.setMaxAltitude(4000);
 
 			commandManager = newDrone.getCommandManager();
 		}

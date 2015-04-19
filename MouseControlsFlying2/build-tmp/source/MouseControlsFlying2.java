@@ -246,9 +246,9 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 		if(xDifference > 0 && yDifference > 0)
 		{
-			int timespan = 1000;
-			float xSpeed = map(xDifference, 0, 1200, 0, 100);
-			float ySpeed = map(yDifference, 0, 1200, 0, 100);
+			int timespan = 500;
+			float xSpeed = map(xDifference, 0, 1200, 10, 70);
+			float ySpeed = map(yDifference, 0, 1200, 10, 70);
 
 			int intXSpeed = Math.round(xSpeed);
 			int intYSpeed = Math.round(ySpeed);
@@ -263,9 +263,9 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 		else if(xDifference > 0 && yDifference < 0)
 		{
-			int timespan = 1000;
-			float xSpeed = map(xDifference, 0, 1200, 0, 100);
-			float ySpeed = map(yDifference, 0, 1200, 0, 100);
+			int timespan = 500;
+			float xSpeed = map(xDifference, 0, 1200, 10, 70);
+			float ySpeed = map(yDifference, 0, 1200, 10, 70);
 
 			int intXSpeed = Math.round(xSpeed);
 			int intYSpeed = Math.round(ySpeed);
@@ -280,9 +280,9 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 		else if(xDifference < 0 && yDifference > 0)
 		{
-			int timespan = 1000;
-			float xSpeed = map(xDifference, 0, 1200, 0, 100);
-			float ySpeed = map(yDifference, 0, 1200, 0, 100);
+			int timespan = 500;
+			float xSpeed = map(xDifference, 0, 1200, 10, 70);
+			float ySpeed = map(yDifference, 0, 1200, 10, 70);
 
 			int intXSpeed = Math.round(xSpeed);
 			int intYSpeed = Math.round(ySpeed);
@@ -297,9 +297,9 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 		else if(xDifference < 0 && yDifference < 0)
 		{
-			int timespan = 1000;
-			float xSpeed = map(xDifference, 0, 1200, 0, 100);
-			float ySpeed = map(yDifference, 0, 1200, 0, 100);
+			int timespan = 500;
+			float xSpeed = map(xDifference, 0, 1200, 10, 70);
+			float ySpeed = map(yDifference, 0, 1200, 10, 70);
 
 			int intXSpeed = Math.round(xSpeed);
 			int intYSpeed = Math.round(ySpeed);
@@ -340,7 +340,7 @@ class Drone
 		{
 			newDrone = new ARDrone();
 			newDrone.start();
-			newDrone.setMaxAltitude(2000);
+			newDrone.setMaxAltitude(4000);
 
 			commandManager = newDrone.getCommandManager();
 		}
