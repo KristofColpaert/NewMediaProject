@@ -62,48 +62,44 @@ public void keyPressed()
 		if(keyCode == UP)
 		{
 			drone.forward();
-			println("1forward");
 		}
 
 		else if(keyCode == DOWN)
 		{
 			drone.backward();
-			println("1backward");
 		}
 
 		else if(keyCode == LEFT)
 		{
 			drone.left();
-			println("1left");
 		}	
 
 		else if(keyCode == RIGHT)
 		{
 			drone.right();
-			println("1right");
 		}
 
 		else if(keyCode == ALT)
 		{
 			drone.takeOff();
-			println("1take off");
 		}
 
 		else if(keyCode == CONTROL)
 		{
 			drone.landing();
-			println("1landing");
 		}
 	}
 
+	// a
 	else if(key == 97)
 	{
-		println("up");
+		drone.up();
 	}
 
-	else if (key == 122) 
+	// b
+	else if(key == 98) 
 	{
-		println("down");	
+		drone.down();	
 	}
 }
 /*
@@ -126,7 +122,7 @@ class Drone
 		{
 			newDrone = new ARDrone();
 			newDrone.start();
-			newDrone.setMaxAltitude(3000);
+			newDrone.setMaxAltitude(5000);
 
 			commandManager = newDrone.getCommandManager();
 		}
@@ -173,7 +169,6 @@ class Drone
 		try 
 		{
 			commandManager.takeOff().doFor(2000);
-			println("take off");
 		}
 
 		catch(Exception ex)
@@ -190,7 +185,6 @@ class Drone
 		try
 		{
 			commandManager.landing();
-			println("landing");
 		}
 
 		catch(Exception ex)
@@ -207,7 +201,6 @@ class Drone
 		try 
 		{
 			commandManager.hover();
-			println("hover");
 		}
 
 		catch(Exception ex)

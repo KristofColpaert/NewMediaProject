@@ -46,13 +46,17 @@ Drone drone;
 ArrayList<ArrayList<PVector>> positionArrays;
 ArrayList<PVector> positions;
 
+// Size of the screen in which you're drawing.
+int sWidth = 1200;
+int sHeight = 800;
+
 /*
 ** Setup method.
 */
 public void setup()
 {
 	// Screen properties.
-	size(1200, 800);
+	size(sWidth, sHeight);
 	smooth();
 	stroke(0xffFFCC00);
 	strokeWeight(10);
@@ -215,13 +219,13 @@ public void keyPressed()
 		if(!positionArrays.isEmpty())
 		{
 			ArrayList<PVector> currentPath = positionArrays.get(0);
+			println("positionArrays: " + positionArrays);
 			flyLine(currentPath);
 		}
 	}
 
 	else if(keyCode == CONTROL)
 	{
-		println("hier");
 		drone.takeOff();
 	}
 
@@ -246,9 +250,9 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 		if(xDifference > 0 && yDifference > 0)
 		{
-			int timespan = 500;
-			float xSpeed = map(xDifference, 0, 1200, 10, 70);
-			float ySpeed = map(yDifference, 0, 1200, 10, 70);
+			int timespan = 1000;
+			float xSpeed = map(xDifference, 0, sWidth, 10, 40);
+			float ySpeed = map(yDifference, 0, sHeight, 40, 100);
 
 			int intXSpeed = Math.round(xSpeed);
 			int intYSpeed = Math.round(ySpeed);
@@ -263,9 +267,9 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 		else if(xDifference > 0 && yDifference < 0)
 		{
-			int timespan = 500;
-			float xSpeed = map(xDifference, 0, 1200, 10, 70);
-			float ySpeed = map(yDifference, 0, 1200, 10, 70);
+			int timespan = 1000;
+			float xSpeed = map(xDifference, 0, sWidth, 10, 40);
+			float ySpeed = map(yDifference, 0, sHeight, 40, 100);
 
 			int intXSpeed = Math.round(xSpeed);
 			int intYSpeed = Math.round(ySpeed);
@@ -280,9 +284,9 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 		else if(xDifference < 0 && yDifference > 0)
 		{
-			int timespan = 500;
-			float xSpeed = map(xDifference, 0, 1200, 10, 70);
-			float ySpeed = map(yDifference, 0, 1200, 10, 70);
+			int timespan = 1000;
+			float xSpeed = map(xDifference, 0, sWidth, 10, 40);
+			float ySpeed = map(yDifference, 0, sHeight, 40, 100);
 
 			int intXSpeed = Math.round(xSpeed);
 			int intYSpeed = Math.round(ySpeed);
@@ -297,9 +301,9 @@ public void flyLine(ArrayList<PVector> currentPath)
 
 		else if(xDifference < 0 && yDifference < 0)
 		{
-			int timespan = 500;
-			float xSpeed = map(xDifference, 0, 1200, 10, 70);
-			float ySpeed = map(yDifference, 0, 1200, 10, 70);
+			int timespan = 1000;
+			float xSpeed = map(xDifference, 0, sWidth, 10, 40);
+			float ySpeed = map(yDifference, 0, sHeight, 40, 100);
 
 			int intXSpeed = Math.round(xSpeed);
 			int intYSpeed = Math.round(ySpeed);

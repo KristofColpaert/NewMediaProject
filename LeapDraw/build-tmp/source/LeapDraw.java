@@ -5,7 +5,6 @@ import processing.opengl.*;
 
 import com.onformative.leap.*; 
 import com.leapmotion.leap.*; 
-import com.leapmotion.leap.Gesture.*; 
 
 import com.onformative.leap.*; 
 
@@ -23,16 +22,17 @@ public class LeapDraw extends PApplet {
 
 
 
-
 PVector cPos = new PVector(width/2, height/2,0);
 ArrayList<PVector> path;
 Controller c = new Controller();
 Frame f;
 LeapMotionP5 leap;
-Boolean drawing = true;
+Boolean drawing = false;
+
+int timer = 0;
 
 public void setup() {
-	size(1920, 900, P3D);
+	size(displayWidth, displayHeight - 45, P3D);
 	noStroke();
 	smooth();
 	fill(0xffF2DA63);
@@ -45,6 +45,7 @@ public void setup() {
 
 	path = new ArrayList<PVector>();
 	leap = new LeapMotionP5(this);
+	drawGrid();
 }
 
 public void draw() {
@@ -62,25 +63,37 @@ public void draw() {
 	}
 }
 
+public void drawGrid() {
+	// int row, col = 40;
+
+	// draw horizontal
+	for (int i = 0; i < len; i+40) {
+		
+	}
+
+	// draw vertical
+	for (int i = 0; i < len; i+40) {
+		
+	}
+}
+
 public void keyPressed() {
+	// Reset
 	if (key == 'R' || key == 'r') {
 		cPos = null;
 		path = new ArrayList<PVector>();
 		background(0xff333333);
 	}
-}
 
-public void circleGestureRecognized(CircleGesture gesture, String clockWiseness) {
-	// START, UPDATE, STOP
-	if (gesture.state() == State.STATE_STOP) {
-		drawing = false;
+	// Toggle start / stop
+	if (key == 'S' || key == 's') {
+		if (drawing == false) {
+			drawing = true;
+		}
+		else {
+			drawing = false;
+		}
 	}
-	else if (gesture.state() == State.STATE_UPDATE) {
-		drawing = false;
-	}
-	else if (gesture.state() == State.STATE_START) {
-		drawing = false;
-	}	
 }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "LeapDraw" };

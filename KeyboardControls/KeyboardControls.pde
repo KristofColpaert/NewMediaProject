@@ -37,21 +37,23 @@ void keyPressed()
 
 		else if(keyCode == ALT)
 		{
-			drone.takeOff();
+			drone.landing();
 		}
 
 		else if(keyCode == CONTROL)
 		{
-			drone.landing();
+			drone.takeOff();
 		}
 	}
 
+	// a
 	else if(key == 97)
 	{
 		drone.up();
 	}
 
-	else if(key == 122) 
+	// b
+	else if(key == 98) 
 	{
 		drone.down();	
 	}
