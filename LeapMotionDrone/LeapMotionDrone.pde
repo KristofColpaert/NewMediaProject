@@ -26,9 +26,6 @@ void setup()
 	// Make new instance of Drone class.
 	drone = new Drone();
 
-	//Make new instance of LeapMotion class.
-	leapMotion = new LeapMotion(this);
-
 	// Initialisation of lists.
 	positions = new ArrayList<PVector>();
 	positionArrays = new ArrayList<ArrayList<PVector>>();
@@ -149,6 +146,7 @@ void keyPressed()
 	{
 		if(isDrawing == false)
 		{
+			leapMotion = new LeapMotion(this);
 			leapMotion.startDrawing();
 			isDrawing = true;
 		}
@@ -156,6 +154,7 @@ void keyPressed()
 		else
 		{
 			leapMotion.stopDrawing();
+			leapMotion = null;
 			isDrawing = false;
 		}
 	}
