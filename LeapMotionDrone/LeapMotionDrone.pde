@@ -50,7 +50,7 @@ void drawBackground()
 }
 
 /*
-** Method to detect the position of the mouse when clicking.
+** Method to detect the position of the finger.
 */
 void detectFingerPosition()
 {
