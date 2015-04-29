@@ -21,3 +21,8 @@
 - Beschikt over knop om het scherm volledig leeg te maken. 
 - Beschikt over knop om het tekenen te starten. 
 - Beschikt over knop om het tekenen te stoppen.
+
+##To do
+
+- Interface voorzien (logo, uitleg van de applicatie). 
+- Noodstop voorzien die de drone landt wanneer de gebruiker dit wenst (hij gaat dan ook automatisch het pad dat de drone aan het vliegen is, onderbreken).
