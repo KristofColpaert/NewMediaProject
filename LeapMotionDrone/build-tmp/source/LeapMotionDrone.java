@@ -453,7 +453,7 @@ class Drone
 
 			if(xDifference > 0 && yDifference > 0)
 			{
-				int timespan = 1000;
+				int timespan = 500;
 				float xSpeed = map(xDifference, 0, sWidth, 10, 40);
 				float ySpeed = map(yDifference, 0, sHeight, 40, 100);
 
@@ -470,7 +470,7 @@ class Drone
 
 			else if(xDifference > 0 && yDifference < 0)
 			{
-				int timespan = 1000;
+				int timespan = 500;
 				float xSpeed = map(xDifference, 0, sWidth, 10, 40);
 				float ySpeed = map(yDifference, 0, sHeight, 40, 100);
 
@@ -487,7 +487,7 @@ class Drone
 
 			else if(xDifference < 0 && yDifference > 0)
 			{
-				int timespan = 1000;
+				int timespan = 500;
 				float xSpeed = map(xDifference, 0, sWidth, 10, 40);
 				float ySpeed = map(yDifference, 0, sHeight, 40, 100);
 
@@ -504,7 +504,7 @@ class Drone
 
 			else if(xDifference < 0 && yDifference < 0)
 			{
-				int timespan = 1000;
+				int timespan = 500;
 				float xSpeed = map(xDifference, 0, sWidth, 10, 40);
 				float ySpeed = map(yDifference, 0, sHeight, 40, 100);
 
