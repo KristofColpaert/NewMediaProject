@@ -75,8 +75,7 @@ PImage bg;
 /*
 ** Setup method.
 */
-public void setup()
-{
+public void setup() {
 	// Screen properties.
 	sWidth = displayWidth;
 	sHeight = displayHeight - 22;
@@ -106,8 +105,7 @@ public void setup()
 /*
 ** Method which should run 30 times every second.
 */
-public void draw()
-{
+public void draw() {
 	if (splash) {
 		posX+=5;
 		posY+=5;
@@ -145,8 +143,7 @@ public void splash() {
 /*
 ** Method to draw the background color.
 */
-public void drawBackground()
-{
+public void drawBackground() {
 	if (intro) {
 		drawGrid();
 	}
@@ -158,14 +155,7 @@ public void drawBackground()
 	}
 }
 
-public void drawGrid() 
-{
-	// println(xLijnen + ";" + yLijnen);
-	// per 3 | lijnen moeten er 2 \u2013 komen
-
-	// ylijn = |
-	// xLijn = \u2013
-
+public void drawGrid() {
 	if (xLijnen <= 2 && yLijnen <= 3) {
 		line(0, gridY, sWidth, gridY);
 		line(gridX, 0, gridX, sHeight);
@@ -178,10 +168,13 @@ public void drawGrid()
 	}
 
 	else {
-		line(0, gridY, sWidth, gridY);
+		line(gridX, 0, gridX, sHeight);
+		gridX += gridDelta;
+		line(gridX, 0, gridX, sHeight);
+		gridX += gridDelta;
+
 		yLijnen = 0;
 		xLijnen = 0;
-		gridY += gridDelta;
 	}
 
 	if(gridX > sWidth) {
@@ -190,8 +183,7 @@ public void drawGrid()
 	}
 }
 
-public void showBattery()
-{
+public void showBattery() {
 	textFont(createFont("Open Sans", 72));
 	text("" + drone.getBattery(), sWidth - 100, 100);
 	// text("38", sWidth - 150, 100);
@@ -203,8 +195,7 @@ public void showBattery()
 /*
 ** Method to detect the position of the finger.
 */
-public void detectFingerPosition()
-{
+public void detectFingerPosition() {
 	if(isDrawing == true)
 	{
 		stroke(0xffEEEEEE);
@@ -213,9 +204,7 @@ public void detectFingerPosition()
 		if(newPosition != null)
 			positions.add(newPosition);
 	}
-
-	else
-	{
+	else {
 		if(!positions.isEmpty())
 		{
 			positionArrays.add(positions);
@@ -226,8 +215,7 @@ public void detectFingerPosition()
 /*
 ** Method to draw the current shape on the screen.
 */
-public void drawShape()
-{
+public void drawShape() {
 	if(positions.size() > 1)
 	{
 		for(int i = 0, l = positions.size() - 1; i < l; i++)
@@ -242,8 +230,7 @@ public void drawShape()
 /*
 ** Method to draw the saved shapes on the screen.
 */
-public void drawPreviousShapes()
-{
+public void drawPreviousShapes() {
 	for(ArrayList<PVector> positionArray : positionArrays)
 	{
 		if(positionArray.size() == 2)
@@ -255,7 +242,6 @@ public void drawPreviousShapes()
 				line(currentPosition.x, currentPosition.y, previousPosition.x, previousPosition.y);
 			}
 		}
-
 		else if(positionArray.size() == 3)
 		{
 			PVector center = positionArray.get(0);
@@ -273,8 +259,7 @@ public void drawPreviousShapes()
 /*
 ** Method to make the drone fly the pattern.
 */
-public void keyPressed()
-{
+public void keyPressed() {
 	// Execute flight.
 	if(key == 'A' || key == 'a')
 	{
@@ -303,7 +288,6 @@ public void keyPressed()
 			leapMotion.startDrawing();
 			isDrawing = true;
 		}
-
 		else
 		{
 			leapMotion.stopDrawing();
@@ -326,11 +310,10 @@ public void keyPressed()
 /*
 ** Method to make the drone fly a line.
 */
-public void flyLine(ArrayList<PVector> currentPath)
-{
+public void flyLine(ArrayList<PVector> currentPath) {
 	if (isFlying) {
 		drone.move(currentPath);
-	
+
 		positionArrays.remove(0);
 		drawBackground();
 		drawPreviousShapes();
