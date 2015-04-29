@@ -1,116 +1,202 @@
+// Main objects
 Drone drone;
 LeapMotion leapMotion;
-ArrayList<ArrayList<PVector>> positionArrays;
+
+// Lists with current and previous positions
 ArrayList<PVector> positions;
+ArrayList<ArrayList<PVector>> positionArrays;
 
-// Size of the screen in which you're drawing.
-int sWidth = 0;
-int sHeight = 0;
+// Size of the screen which you're drawing
+int screenWidth = 0;
+int screenHeight = 0;
 
-// Boolean to detect if drawing is on or off.
-Boolean isDrawing = false;
-Boolean isFlying = true;
-Boolean intro = false;
+// Booleans for the different modes of the game
 Boolean splash = true;
+Boolean splashMove = false;
+Boolean intro = false;
+Boolean game = false;
 
-int posX = 0;
+// Booleans that marks if the user is drawing or flying
+Boolean isDrawing = false;
+Boolean isFlying = false;
+
+// Global positions for the splash screen
+int posX = 0; 
 int posY = 0;
-int rot = 0;
 
+// Grid variables
 int gridDelta = 0;
-int gridX = 0;
+int gridX = 0; 
 int gridY = 0;
 int xLijnen = 0;
 int yLijnen = 0;
-PImage bg;
+
+// Background image
+PImage bg; 
 
 /*
-** Setup method.
-*/
-void setup() {
-	// Screen properties.
-	sWidth = displayWidth;
-	sHeight = displayHeight - 22;
-	size(sWidth, sHeight);
-	smooth();
-	stroke(#266F97);
-	background(#222222);
-	strokeWeight(1);
-	frameRate(30);
+** Setup method
+*/ 
+void setup()
+{
+	// Global properties
+	screenWidth = displayWidth;
+	screenHeight = displayHeight - 22;
+	positions = new ArrayList<PVector>();
+	positionArrays = new ArrayList<ArrayList<PVector>>();
+	posX = screenWidth / 2 - 150;
+	posY = screenHeight / 2 - 300;
 
-	posX = sWidth / 2 - 150;
-	posY = sHeight / 2 - 300;
-	splash();
-
-	gridDelta = sWidth / 50;
+	// Grid properties
+	gridDelta = screenWidth / 50;
 	gridX = gridDelta / 4;
 	gridY = gridDelta / 4;
 
-	// Make new instance of Drone class.
-	drone = new Drone();
+	// Screen properties
+	size(screenWidth, screenHeight);
+	smooth();
+	frameRate(30);
 
-	// Initialisation of lists.
-	positions = new ArrayList<PVector>();
-	positionArrays = new ArrayList<ArrayList<PVector>>();
+	// Drone
+	drone = new Drone();
 }
 
 /*
-** Method which should run 30 times every second.
+** Draw method
 */
-void draw() {
-	if (splash) {
-		posX+=5;
-		posY+=5;
+void draw()
+{
+	if(splash)
+	{
+		if(!splashMove)
+		{
+			posX += 5;
+			posY += 5;
+		}
+
+		else
+		{
+			posX -= 5;	
+		}
+
 		splash();
 	}
-	else if (!intro) {
+
+	else if(intro)
+	{
+		drawGrid();
+	}
+
+	else if(game)
+	{
 		drone.hover();
 		detectFingerPosition();
-		showBattery();
 		drawShape();
-	}
-	else
-	{
-		drawBackground();
 	}
 }
 
-void splash() {
-	background(#266F97);
-	PShape logo = loadShape("assets/logo.svg");
-	shape(logo, sWidth / 2 - 150, sHeight / 2 - 300, 300, 300);
+/*
+** Method to detect key presses
+*/
+void keyPressed()
+{
+	// SPACE BAR: skip splash and start or stop drawing
+	if(keyCode == 32)
+	{
+		if(!intro && !game && !splash)
+		{
+			background(#222222);
+			intro = true;
+		}
 
-	tint(255, 127);
+		else if(!isDrawing && game)
+		{
+			leapMotion = new LeapMotion(this);
+			leapMotion.startDrawing();
+			isDrawing = true;
+		}
+
+		else if(isDrawing && game)
+		{
+			leapMotion.stopDrawing();
+			leapMotion = null;
+			isDrawing = false;
+		}
+	}
+
+	// DOWN: reset drawing
+	else if(keyCode == DOWN)
+	{
+		positions = new ArrayList<PVector>();
+		positionArrays = new ArrayList<ArrayList<PVector>>();
+		drawBackground();
+	}
+
+	// UP: make the drone execute a flight
+	else if(keyCode == UP)
+	{
+		if(!positionArrays.isEmpty())
+		{
+			ArrayList<PVector> currentPath = positionArrays.get(0);
+			flyLine(currentPath);
+		}
+	}
+
+	// LEFT: make the drone take off
+	else if(keyCode == LEFT)
+	{
+		drone.takeOff();
+		isFlying = true;
+	}
+
+	else if(keyCode == RIGHT)
+	{
+		drone.landing();
+		isFlying = false;
+	}
+}
+
+/*
+** Method to show the splash screen
+*/
+void splash()
+{
+	background(#266F97);
+
+	PShape logo = loadShape("assets/logo.svg");
+	shape(logo, screenWidth / 2 - 150, screenHeight / 2 - 300, 300, 300);
 	PShape hand = loadShape("assets/hand.svg");
 	shape(hand, posX, posY, 300, 300);
 
-	if (posX >= sWidth / 2 + 50) {
-		intro = true;
-		splash = false;
-		background(#222222);
+	// Check if hand reaches first or second position
+	if(posX == screenWidth / 2 + 65)
+	{
+		splashMove = true;
 	}
-	// intro = true;
+
+	else if(splashMove == true && posX <= screenWidth / 2 - 25)
+	{	
+		splash = false;
+
+		int time = millis();
+		while(millis() < time + 500);
+
+		textAlign(CENTER, CENTER);
+		textFont(createFont("Open Sans", 56));
+		text("Leap Motion Drone", screenWidth / 2, screenHeight / 2 + 225);
+	}
 }
 
 /*
-** Method to draw the background color.
-*/
-void drawBackground() {
-	if (intro) {
-		drawGrid();
-	}
-	else {
-		// neem foto als achtergrond
-		if(bg != null) {
-			image(bg, 0, 0);
-		}
-	}
-}
-
-void drawGrid() {
-	if (xLijnen <= 2 && yLijnen <= 3) {
-		line(0, gridY, sWidth, gridY);
-		line(gridX, 0, gridX, sHeight);
+** Method to draw an on screen grid
+*/ 
+void drawGrid()
+{
+	stroke(#266F97);
+	if (xLijnen <= 2 && yLijnen <= 3) 
+	{
+		line(0, gridY, screenWidth, gridY);
+		line(gridX, 0, gridX, screenHeight);
 
 		xLijnen++;
 		yLijnen++;
@@ -119,58 +205,83 @@ void drawGrid() {
 		gridY += gridDelta;
 	}
 
-	else {
-		line(gridX, 0, gridX, sHeight);
+	else 
+	{
+		line(gridX, 0, gridX, screenHeight);
 		gridX += gridDelta;
-		line(gridX, 0, gridX, sHeight);
+		line(gridX, 0, gridX, screenHeight);
 		gridX += gridDelta;
 
 		yLijnen = 0;
 		xLijnen = 0;
 	}
 
-	if(gridX > sWidth) {
+	if(gridX > screenWidth) 
+	{
 		intro = false;
+		game = true;
 		bg = get(0, 0, width, height);
 	}
 }
 
-void showBattery() {
-	textFont(createFont("Open Sans", 72));
-	text("" + drone.getBattery(), sWidth - 100, 100);
-	// text("38", sWidth - 150, 100);
-
-	textFont(createFont("Open Sans", 15));
-	text("% battery", sWidth - 150, 130);
+/*
+** Draw the background grid as an image
+*/
+void drawBackground()
+{
+	if(bg != null)
+	{
+		image(bg, 0, 0);
+	}
 }
 
 /*
-** Method to detect the position of the finger.
+** Show the battery percentage on the screen
 */
-void detectFingerPosition() {
+void showBattery() 
+{
+	textFont(createFont("Open Sans", 72));
+	text("" + drone.getBattery(), screenWidth - 100, 100);
+	// text("38", sWidth - 150, 100);
+
+	textFont(createFont("Open Sans", 15));
+	text("% battery", screenWidth - 150, 130);
+}
+
+/*
+** Method to detect the position of the finger
+*/
+void detectFingerPosition() 
+{
 	if(isDrawing == true)
 	{
 		stroke(#EEEEEE);
 		strokeWeight(7);
 		PVector newPosition = leapMotion.getCurrentFingerPosition();
 		if(newPosition != null)
+		{
 			positions.add(newPosition);
+		}
 	}
-	else {
+
+	else 
+	{
 		if(!positions.isEmpty())
 		{
 			positionArrays.add(positions);
 			positions = new ArrayList<PVector>();
-		}
+		}	
 	}
 }
+
 /*
 ** Method to draw the current shape on the screen.
 */
-void drawShape() {
+void drawShape() 
+{
 	if(positions.size() > 1)
 	{
-		for(int i = 0, l = positions.size() - 1; i < l; i++)
+		for(int i = 0; i < positions.size() - 1; i++)
 		{
 			PVector currentPosition = positions.get(i);
 			PVector previousPosition = positions.get(i + 1);
@@ -180,7 +291,7 @@ void drawShape() {
 }
 
 /*
-** Method to draw the saved shapes on the screen.
+** Method to draw the previously saved shapes on the screen
 */
 void drawPreviousShapes() {
 	for(ArrayList<PVector> positionArray : positionArrays)
@@ -209,68 +320,16 @@ void drawPreviousShapes() {
 }
 
 /*
-** Method to make the drone fly the pattern.
-*/
-void keyPressed() {
-	// Execute flight.
-	if(key == 'A' || key == 'a')
-	{
-		if(!positionArrays.isEmpty())
-		{
-			ArrayList<PVector> currentPath = positionArrays.get(0);
-			println("positionArrays: " + positionArrays);
-			flyLine(currentPath);
-		}
-	}
-
-	// Reset drawing.
-	if(key == 'R' || key == 'r')
-	{
-		positions = new ArrayList<PVector>();
-		positionArrays = new ArrayList<ArrayList<PVector>>();
-		drawBackground();
-	}
-
-	// Start or stop drawing.
-	if(key == 'S' || key == 's')
-	{
-		if(isDrawing == false)
-		{
-			leapMotion = new LeapMotion(this);
-			leapMotion.startDrawing();
-			isDrawing = true;
-		}
-		else
-		{
-			leapMotion.stopDrawing();
-			leapMotion = null;
-			isDrawing = false;
-		}
-	}
-
-	// Let the drone take off.
-	else if(keyCode == CONTROL)
-		drone.takeOff();
-
-	// Let the drone land.
-	else if(keyCode == ALT) {
-		isFlying = false;
-		drone.landing();
-	}
-}
-
-/*
 ** Method to make the drone fly a line.
 */
-void flyLine(ArrayList<PVector> currentPath) {
-	if (isFlying) {
+void flyLine(ArrayList<PVector> currentPath) 
+{
+	if (isFlying) 
+	{
 		drone.move(currentPath);
 
 		positionArrays.remove(0);
 		drawBackground();
 		drawPreviousShapes();
-	}
-	else {
-		drone.landing();
 	}
 }

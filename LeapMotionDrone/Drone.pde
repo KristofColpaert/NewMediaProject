@@ -235,8 +235,8 @@ class Drone
 			if(xDifference > 0 && yDifference > 0)
 			{
 				int timespan = 500;
-				float xSpeed = map(xDifference, 0, sWidth, 10, 40);
-				float ySpeed = map(yDifference, 0, sHeight, 40, 100);
+				float xSpeed = map(xDifference, 0, screenWidth, 10, 40);
+				float ySpeed = map(yDifference, 0, screenHeight, 40, 100);
 
 				int intXSpeed = Math.round(xSpeed);
 				int intYSpeed = Math.round(ySpeed);
@@ -252,8 +252,8 @@ class Drone
 			else if(xDifference > 0 && yDifference < 0)
 			{
 				int timespan = 500;
-				float xSpeed = map(xDifference, 0, sWidth, 10, 40);
-				float ySpeed = map(yDifference, 0, sHeight, 40, 100);
+				float xSpeed = map(xDifference, 0, screenWidth, 10, 40);
+				float ySpeed = map(yDifference, 0, screenHeight, 40, 100);
 
 				int intXSpeed = Math.round(xSpeed);
 				int intYSpeed = Math.round(ySpeed);
@@ -269,8 +269,8 @@ class Drone
 			else if(xDifference < 0 && yDifference > 0)
 			{
 				int timespan = 500;
-				float xSpeed = map(xDifference, 0, sWidth, 10, 40);
-				float ySpeed = map(yDifference, 0, sHeight, 40, 100);
+				float xSpeed = map(xDifference, 0, screenWidth, 10, 40);
+				float ySpeed = map(yDifference, 0, screenHeight, 40, 100);
 
 				int intXSpeed = Math.round(xSpeed);
 				int intYSpeed = Math.round(ySpeed);
@@ -286,8 +286,8 @@ class Drone
 			else if(xDifference < 0 && yDifference < 0)
 			{
 				int timespan = 500;
-				float xSpeed = map(xDifference, 0, sWidth, 10, 40);
-				float ySpeed = map(yDifference, 0, sHeight, 40, 100);
+				float xSpeed = map(xDifference, 0, screenWidth, 10, 40);
+				float ySpeed = map(yDifference, 0, screenHeight, 40, 100);
 
 				int intXSpeed = Math.round(xSpeed);
 				int intYSpeed = Math.round(ySpeed);
