@@ -9,6 +9,7 @@ class Drone
 	*/
 	ARDrone newDrone = null;
 	CommandManager commandManager;
+	int battery;
 
 	/*
 	** Constructor trying to set up the drone and its listeners.
@@ -35,6 +36,7 @@ class Drone
 		{
 			public void batteryLevelChanged(int percentage)
 			{
+				battery = percentage;
 				logBattery(percentage);
 			}
 
@@ -55,8 +57,16 @@ class Drone
 	** Method to log battery status to the command line console.
 	*/
 	void logBattery(int percentage)
-	{
+	{	
 		println("Current battery status: " + percentage + "%");
+	}
+
+	/*
+	** Method to return the battery percentage.
+	*/
+	int getBattery()
+	{
+		return battery;
 	}
 
 	/*

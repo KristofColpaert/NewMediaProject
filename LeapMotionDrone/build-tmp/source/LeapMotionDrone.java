@@ -52,11 +52,25 @@ ArrayList<ArrayList<PVector>> positionArrays;
 ArrayList<PVector> positions;
 
 // Size of the screen in which you're drawing.
-int sWidth = 1200;
-int sHeight = 800;
+int sWidth = 0;
+int sHeight = 0;
 
 // Boolean to detect if drawing is on or off.
 Boolean isDrawing = false;
+Boolean isFlying = true;
+Boolean intro = false;
+Boolean splash = true;
+
+int posX = 0;
+int posY = 0;
+int rot = 0;
+
+int gridDelta = 0;
+int gridX = 0;
+int gridY = 0;
+int xLijnen = 0;
+int yLijnen = 0;
+PImage bg;
 
 /*
 ** Setup method.
@@ -64,12 +78,22 @@ Boolean isDrawing = false;
 public void setup()
 {
 	// Screen properties.
+	sWidth = displayWidth;
+	sHeight = displayHeight - 22;
 	size(sWidth, sHeight);
 	smooth();
-	stroke(0xffFFCC00);
-	strokeWeight(10);
-	drawBackground();
+	stroke(0xff266F97);
+	background(0xff222222);
+	strokeWeight(1);
 	frameRate(30);
+
+	posX = sWidth / 2 - 150;
+	posY = sHeight / 2 - 300;
+	splash();
+
+	gridDelta = sWidth / 50;
+	gridX = gridDelta / 4;
+	gridY = gridDelta / 4;
 
 	// Make new instance of Drone class.
 	drone = new Drone();
@@ -84,9 +108,38 @@ public void setup()
 */
 public void draw()
 {
-	drone.hover();
-	detectFingerPosition();
-	drawShape();
+	if (splash) {
+		posX+=5;
+		posY+=5;
+		splash();
+	}
+	else if (!intro) {
+		drone.hover();
+		detectFingerPosition();
+		showBattery();
+		drawShape();
+	}
+	else
+	{
+		drawBackground();
+	}
+}
+
+public void splash() {
+	background(0xff266F97);
+	PShape logo = loadShape("assets/logo.svg");
+	shape(logo, sWidth / 2 - 150, sHeight / 2 - 300, 300, 300);
+
+	tint(255, 127);
+	PShape hand = loadShape("assets/hand.svg");
+	shape(hand, posX, posY, 300, 300);
+
+	if (posX >= sWidth / 2 + 50) {
+		intro = true;
+		splash = false;
+		background(0xff222222);
+	}
+	// intro = true;
 }
 
 /*
@@ -94,16 +147,68 @@ public void draw()
 */
 public void drawBackground()
 {
-	background(0xff333333);
+	if (intro) {
+		drawGrid();
+	}
+	else {
+		// neem foto als achtergrond
+		if(bg != null) {
+			image(bg, 0, 0);
+		}
+	}
+}
+
+public void drawGrid() 
+{
+	// println(xLijnen + ";" + yLijnen);
+	// per 3 | lijnen moeten er 2 \u2013 komen
+
+	// ylijn = |
+	// xLijn = \u2013
+
+	if (xLijnen <= 2 && yLijnen <= 3) {
+		line(0, gridY, sWidth, gridY);
+		line(gridX, 0, gridX, sHeight);
+
+		xLijnen++;
+		yLijnen++;
+
+		gridX += gridDelta;
+		gridY += gridDelta;
+	}
+
+	else {
+		line(0, gridY, sWidth, gridY);
+		yLijnen = 0;
+		xLijnen = 0;
+		gridY += gridDelta;
+	}
+
+	if(gridX > sWidth) {
+		intro = false;
+		bg = get(0, 0, width, height);
+	}
+}
+
+public void showBattery()
+{
+	textFont(createFont("Open Sans", 72));
+	text("" + drone.getBattery(), sWidth - 100, 100);
+	// text("38", sWidth - 150, 100);
+
+	textFont(createFont("Open Sans", 15));
+	text("% battery", sWidth - 150, 130);
 }
 
 /*
-** Method to detect the position of the mouse when clicking.
+** Method to detect the position of the finger.
 */
 public void detectFingerPosition()
 {
 	if(isDrawing == true)
 	{
+		stroke(0xffEEEEEE);
+		strokeWeight(7);
 		PVector newPosition = leapMotion.getCurrentFingerPosition();
 		if(newPosition != null)
 			positions.add(newPosition);
@@ -212,8 +317,10 @@ public void keyPressed()
 		drone.takeOff();
 
 	// Let the drone land.
-	else if(keyCode == ALT)
+	else if(keyCode == ALT) {
+		isFlying = false;
 		drone.landing();
+	}
 }
 
 /*
@@ -221,11 +328,16 @@ public void keyPressed()
 */
 public void flyLine(ArrayList<PVector> currentPath)
 {
-	drone.move(currentPath);
+	if (isFlying) {
+		drone.move(currentPath);
 	
-	positionArrays.remove(0);
-	drawBackground();
-	drawPreviousShapes();
+		positionArrays.remove(0);
+		drawBackground();
+		drawPreviousShapes();
+	}
+	else {
+		drone.landing();
+	}
 }
 /*
 ** Class in which we provide access to the Parrot AR Drone 2.0.
@@ -238,6 +350,7 @@ class Drone
 	*/
 	ARDrone newDrone = null;
 	CommandManager commandManager;
+	int battery;
 
 	/*
 	** Constructor trying to set up the drone and its listeners.
@@ -264,6 +377,7 @@ class Drone
 		{
 			public void batteryLevelChanged(int percentage)
 			{
+				battery = percentage;
 				logBattery(percentage);
 			}
 
@@ -284,8 +398,16 @@ class Drone
 	** Method to log battery status to the command line console.
 	*/
 	public void logBattery(int percentage)
-	{
+	{	
 		println("Current battery status: " + percentage + "%");
+	}
+
+	/*
+	** Method to return the battery percentage.
+	*/
+	public int getBattery()
+	{
+		return battery;
 	}
 
 	/*
