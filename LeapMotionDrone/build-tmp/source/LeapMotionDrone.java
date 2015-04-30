@@ -85,8 +85,7 @@ PImage bg;
 /*
 ** Setup method
 */ 
-public void setup()
-{
+public void setup() {
 	// Global properties
 	screenWidth = displayWidth;
 	screenHeight = displayHeight - 22;
@@ -112,8 +111,7 @@ public void setup()
 /*
 ** Draw method
 */
-public void draw()
-{
+public void draw() {
 	if(splash)
 	{
 		if(!splashMove)
@@ -121,10 +119,9 @@ public void draw()
 			posX += 5;
 			posY += 5;
 		}
-
 		else
 		{
-			posX -= 5;	
+			posX -= 5;
 		}
 
 		splash();
@@ -139,6 +136,7 @@ public void draw()
 	{
 		drone.hover();
 		detectFingerPosition();
+		showBattery();
 		drawShape();
 	}
 }
@@ -146,8 +144,7 @@ public void draw()
 /*
 ** Method to detect key presses
 */
-public void keyPressed()
-{
+public void keyPressed() {
 	// SPACE BAR: skip splash and start or stop drawing
 	if(keyCode == 32)
 	{
@@ -207,8 +204,7 @@ public void keyPressed()
 /*
 ** Method to show the splash screen
 */
-public void splash()
-{
+public void splash() {
 	background(0xff266F97);
 
 	PShape logo = loadShape("assets/logo.svg");
@@ -221,10 +217,10 @@ public void splash()
 	{
 		splashMove = true;
 	}
-
 	else if(splashMove == true && posX <= screenWidth / 2 - 25)
-	{	
+	{
 		splash = false;
+		posX += 100;
 
 		int time = millis();
 		while(millis() < time + 500);
@@ -238,8 +234,7 @@ public void splash()
 /*
 ** Method to draw an on screen grid
 */ 
-public void drawGrid()
-{
+public void drawGrid(){
 	stroke(0xff266F97);
 	if (xLijnen <= 2 && yLijnen <= 3) 
 	{
@@ -275,8 +270,7 @@ public void drawGrid()
 /*
 ** Draw the background grid as an image
 */
-public void drawBackground()
-{
+public void drawBackground() {
 	if(bg != null)
 	{
 		image(bg, 0, 0);
@@ -286,21 +280,18 @@ public void drawBackground()
 /*
 ** Show the battery percentage on the screen
 */
-public void showBattery() 
-{
+public void showBattery() {
 	textFont(createFont("Open Sans", 72));
 	text("" + drone.getBattery(), screenWidth - 100, 100);
-	// text("38", sWidth - 150, 100);
 
 	textFont(createFont("Open Sans", 15));
-	text("% battery", screenWidth - 150, 130);
+	text("% battery", screenWidth - 100, 150);
 }
 
 /*
 ** Method to detect the position of the finger
 */
-public void detectFingerPosition() 
-{
+public void detectFingerPosition() {
 	if(isDrawing == true)
 	{
 		stroke(0xffEEEEEE);
@@ -325,8 +316,7 @@ public void detectFingerPosition()
 /*
 ** Method to draw the current shape on the screen.
 */
-public void drawShape() 
-{
+public void drawShape() {
 	if(positions.size() > 1)
 	{
 		for(int i = 0; i < positions.size() - 1; i++)
@@ -370,8 +360,7 @@ public void drawPreviousShapes() {
 /*
 ** Method to make the drone fly a line.
 */
-public void flyLine(ArrayList<PVector> currentPath) 
-{
+public void flyLine(ArrayList<PVector> currentPath) {
 	if (isFlying) 
 	{
 		drone.move(currentPath);
