@@ -27,8 +27,8 @@ Een overzicht van de applicaties
 - LeapDraw: applicatie die vingerbewegingen boven de Leap Motion omzet naar tekeningen op het scherm.
 
 - LeapMotionDrone: het eindresultaat van dit project. Met de Leap Motion worden tekeningen op het scherm gemaakt. Die tekeningen worden vervolgens omgezet in bewegingen van de drone.
-  -   CTRL: take off.
-  -   ALT: landing.
-  -   A: zet tekeningen met de Leap Motion om in dronebewegingen.
-  -   S: start/stop het tekenen met de Leap Motion.
-  -   R: maak het scherm leeg. Start opnieuw met tekenen.
+  -   SPACE: start/stop het tekenen met de Leap Motion.
+  -   LEFT: take off.
+  -   RIGHT: landing.
+  -   UP: zet tekeningen met de Leap Motion om in dronebewegingen.
+  -   DOWN: maak het scherm leeg. Start opnieuw met tekenen.
