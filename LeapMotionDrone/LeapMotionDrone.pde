@@ -153,17 +153,26 @@ void keyPressed()
 			ArrayList<PVector> currentPath = positionArrays.get(0);
 			flyLine(currentPath);
 		}
+
+		else
+		{
+			logMessage("No drawings were detected");
+		}
 	}
 
 	// LEFT: make the drone take off
 	else if(keyCode == LEFT)
 	{
+		logMessage("Drone taking off");
+		drone.executePath = true;
 		drone.takeOff();
 		isFlying = true;
 	}
 
 	else if(keyCode == RIGHT)
 	{
+		logMessage("Drone landing");
+		drone.executePath = false;
 		drone.landing();
 		isFlying = false;
 	}

@@ -89,7 +89,8 @@ int currentLogTime = 0;
 /*
 ** Setup method
 */ 
-public void setup() {
+public void setup() 
+{
 	// Global properties
 	screenWidth = displayWidth;
 	screenHeight = displayHeight - 22;
@@ -115,7 +116,8 @@ public void setup() {
 /*
 ** Draw method
 */
-public void draw() {
+public void draw() 
+{
 	if(splash)
 	{
 		if(!splashMove)
@@ -157,7 +159,8 @@ public void draw() {
 /*
 ** Method to detect key presses
 */
-public void keyPressed() {
+public void keyPressed() 
+{
 	// SPACE BAR: skip splash and start or stop drawing
 	if(keyCode == 32)
 	{
@@ -198,26 +201,41 @@ public void keyPressed() {
 			ArrayList<PVector> currentPath = positionArrays.get(0);
 			flyLine(currentPath);
 		}
+
+		else
+		{
+			logMessage("No drawings were detected");
+		}
 	}
 
 	// LEFT: make the drone take off
 	else if(keyCode == LEFT)
 	{
+		logMessage("Drone taking off");
+		drone.executePath = true;
 		drone.takeOff();
 		isFlying = true;
 	}
 
 	else if(keyCode == RIGHT)
 	{
+		logMessage("Drone landing");
+		drone.executePath = false;
 		drone.landing();
 		isFlying = false;
 	}
 }
 
+public void mousePressed()
+{
+	println("qsklqsklsqkldmkskmdsfdmJFDIOIOREUIOREIURUORHJKFJHKDJHDFDFJHSJHKhjkjhkdffgjkfgjkhfgjhfgkjhfgjhkfgjkhfgjhkfgjhk");
+}
+
 /*
 ** Method to show the splash screen
 */
-public void splash() {
+public void splash() 
+{
 	background(0xff266F97);
 
 	PShape logo = loadShape("assets/logo.svg");
@@ -230,6 +248,7 @@ public void splash() {
 	{
 		splashMove = true;
 	}
+
 	else if(splashMove == true && posX <= screenWidth / 2 - 25)
 	{
 		splash = false;
@@ -246,7 +265,8 @@ public void splash() {
 /*
 ** Method to draw an on screen grid
 */ 
-public void drawGrid(){
+public void drawGrid()
+{
 	stroke(0xff266F97);
 	if (xLijnen <= 2 && yLijnen <= 3) 
 	{
@@ -282,7 +302,8 @@ public void drawGrid(){
 /*
 ** Draw the background grid as an image
 */
-public void drawBackground() {
+public void drawBackground() 
+{
 	if(bg != null)
 	{
 		image(bg, 0, 0);
@@ -292,7 +313,8 @@ public void drawBackground() {
 /*
 ** Show the battery percentage on the screen
 */
-public void showBattery() {
+public void showBattery() 
+{
 	textFont(createFont("Open Sans", 72));
 	text("" + drone.getBattery(), screenWidth - 100, 100);
 
@@ -303,7 +325,8 @@ public void showBattery() {
 /*
 ** Method to detect the position of the finger
 */
-public void detectFingerPosition() {
+public void detectFingerPosition() 
+{
 	if(isDrawing == true)
 	{
 		stroke(0xffEEEEEE);
@@ -343,11 +366,10 @@ public void drawShape() {
 /*
 ** Method to draw the previously saved shapes on the screen
 */
-public void drawPreviousShapes() {
+public void drawPreviousShapes() 
+{
 	for(ArrayList<PVector> positionArray : positionArrays)
 	{
-		println(positionArray);
-		println("hierldssdlkklsdklsdklsdklsdlksdlksdlksdklsdkldsklsdkldskldskldsklsdklsdkldskldskl");
 		if(positionArray.size() > 2)
 		{
 			for(int i = 0; i < positionArray.size() - 1; i++)
@@ -357,34 +379,14 @@ public void drawPreviousShapes() {
 				line(currentPosition.x, currentPosition.y, previousPosition.x, previousPosition.y);
 			}
 		}
-
-		// if(positionArray.size() == 2)
-		// {
-		// 	for(int i = 0, l = positionArray.size() - 1; i < l; i++)
-		// 	{
-		// 		println("hierldssdlkklsdklsdklsdklsdlksdlksdlksdklsdkldsklsdkldskldskldsklsdklsdkldskldskl2");
-				
-		// 	}
-		// }
-		// else if(positionArray.size() == 3)
-		// {
-		// 	println("hierldssdlkklsdklsdklsdklsdlksdlksdlksdklsdkldsklsdkldskldskldsklsdklsdkldskldskl3");
-		// 	PVector center = positionArray.get(0);
-		// 	PVector positionTop = positionArray.get(1);
-		// 	PVector positionLeft = positionArray.get(2);
-
-		// 	float ellipseWidth = (Math.abs(positionLeft.x - center.x)) * 2;
-		// 	float ellipseHeight = (Math.abs(positionTop.y - center.y)) * 2;
-
-		// 	ellipse(center.x, center.y, ellipseWidth, ellipseHeight);
-		// }
 	}
 }
 
 /*
 ** Method to make the drone fly a line
 */
-public void flyLine(ArrayList<PVector> currentPath) {
+public void flyLine(ArrayList<PVector> currentPath) 
+{
 	if (isFlying) 
 	{
 		drone.move(currentPath);
@@ -420,8 +422,9 @@ class Drone
 	** Fields
 	*/
 	ARDrone newDrone = null;
-	CommandManager commandManager;
-	int battery;
+	CommandManager commandManager = null;
+	int battery = 0;
+	Boolean executePath = true;
 
 	/*
 	** Constructor trying to set up the drone and its listeners.
@@ -654,7 +657,7 @@ class Drone
 				int intYSpeed = Math.round(ySpeed);
 
 				int currentTime = millis();
-				while(millis() < currentTime + timespan)
+				while(executePath && millis() < currentTime + timespan)
 				{
 					this.left(intXSpeed, 1);
 					this.up(intYSpeed, 1);
@@ -671,7 +674,7 @@ class Drone
 				int intYSpeed = Math.round(ySpeed);
 
 				int currentTime = millis();
-				while(millis() < currentTime + timespan)
+				while(executePath && millis() < currentTime + timespan)
 				{
 					this.left(intXSpeed, 1);
 					this.down(intYSpeed, 1);
@@ -688,7 +691,7 @@ class Drone
 				int intYSpeed = Math.round(ySpeed);
 
 				int currentTime = millis();
-				while(millis() < currentTime + timespan)
+				while(executePath && millis() < currentTime + timespan)
 				{
 					this.right(intXSpeed, 1);
 					this.up(intYSpeed, 1);
@@ -705,7 +708,7 @@ class Drone
 				int intYSpeed = Math.round(ySpeed);
 
 				int currentTime = millis();
-				while(millis() < currentTime + timespan)
+				while(executePath && millis() < currentTime + timespan)
 				{
 					this.right(intXSpeed, 1);
 					this.down(intYSpeed, 1);

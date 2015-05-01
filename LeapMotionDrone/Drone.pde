@@ -8,8 +8,9 @@ class Drone
 	** Fields
 	*/
 	ARDrone newDrone = null;
-	CommandManager commandManager;
-	int battery;
+	CommandManager commandManager = null;
+	int battery = 0;
+	Boolean executePath = true;
 
 	/*
 	** Constructor trying to set up the drone and its listeners.
@@ -242,7 +243,7 @@ class Drone
 				int intYSpeed = Math.round(ySpeed);
 
 				int currentTime = millis();
-				while(millis() < currentTime + timespan)
+				while(executePath && millis() < currentTime + timespan)
 				{
 					this.left(intXSpeed, 1);
 					this.up(intYSpeed, 1);
@@ -259,7 +260,7 @@ class Drone
 				int intYSpeed = Math.round(ySpeed);
 
 				int currentTime = millis();
-				while(millis() < currentTime + timespan)
+				while(executePath && millis() < currentTime + timespan)
 				{
 					this.left(intXSpeed, 1);
 					this.down(intYSpeed, 1);
@@ -276,7 +277,7 @@ class Drone
 				int intYSpeed = Math.round(ySpeed);
 
 				int currentTime = millis();
-				while(millis() < currentTime + timespan)
+				while(executePath && millis() < currentTime + timespan)
 				{
 					this.right(intXSpeed, 1);
 					this.up(intYSpeed, 1);
@@ -293,7 +294,7 @@ class Drone
 				int intYSpeed = Math.round(ySpeed);
 
 				int currentTime = millis();
-				while(millis() < currentTime + timespan)
+				while(executePath && millis() < currentTime + timespan)
 				{
 					this.right(intXSpeed, 1);
 					this.down(intYSpeed, 1);
