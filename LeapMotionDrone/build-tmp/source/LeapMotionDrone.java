@@ -82,6 +82,10 @@ int yLijnen = 0;
 // Background image
 PImage bg; 
 
+// Global definitions for log messages
+Boolean logging = false;
+int currentLogTime = 0;
+
 /*
 ** Setup method
 */ 
@@ -138,6 +142,15 @@ public void draw() {
 		detectFingerPosition();
 		showBattery();
 		drawShape();
+	}
+
+	if(logging && millis() > currentLogTime + 5000)
+	{
+		logging = false;
+		currentLogTime = 0;
+		drawBackground();
+		drawShape();
+		drawPreviousShapes();
 	}
 }
 
@@ -220,7 +233,6 @@ public void splash() {
 	else if(splashMove == true && posX <= screenWidth / 2 - 25)
 	{
 		splash = false;
-		posX += 100;
 
 		int time = millis();
 		while(millis() < time + 500);
@@ -314,7 +326,7 @@ public void detectFingerPosition() {
 }
 
 /*
-** Method to draw the current shape on the screen.
+** Method to draw the current shape on the screen
 */
 public void drawShape() {
 	if(positions.size() > 1)
@@ -334,31 +346,43 @@ public void drawShape() {
 public void drawPreviousShapes() {
 	for(ArrayList<PVector> positionArray : positionArrays)
 	{
-		if(positionArray.size() == 2)
+		println(positionArray);
+		println("hierldssdlkklsdklsdklsdklsdlksdlksdlksdklsdkldsklsdkldskldskldsklsdklsdkldskldskl");
+		if(positionArray.size() > 2)
 		{
-			for(int i = 0, l = positionArray.size() - 1; i < l; i++)
+			for(int i = 0; i < positionArray.size() - 1; i++)
 			{
 				PVector currentPosition = positionArray.get(i);
 				PVector previousPosition = positionArray.get(i + 1);
 				line(currentPosition.x, currentPosition.y, previousPosition.x, previousPosition.y);
 			}
 		}
-		else if(positionArray.size() == 3)
-		{
-			PVector center = positionArray.get(0);
-			PVector positionTop = positionArray.get(1);
-			PVector positionLeft = positionArray.get(2);
 
-			float ellipseWidth = (Math.abs(positionLeft.x - center.x)) * 2;
-			float ellipseHeight = (Math.abs(positionTop.y - center.y)) * 2;
+		// if(positionArray.size() == 2)
+		// {
+		// 	for(int i = 0, l = positionArray.size() - 1; i < l; i++)
+		// 	{
+		// 		println("hierldssdlkklsdklsdklsdklsdlksdlksdlksdklsdkldsklsdkldskldskldsklsdklsdkldskldskl2");
+				
+		// 	}
+		// }
+		// else if(positionArray.size() == 3)
+		// {
+		// 	println("hierldssdlkklsdklsdklsdklsdlksdlksdlksdklsdkldsklsdkldskldskldsklsdklsdkldskldskl3");
+		// 	PVector center = positionArray.get(0);
+		// 	PVector positionTop = positionArray.get(1);
+		// 	PVector positionLeft = positionArray.get(2);
 
-			ellipse(center.x, center.y, ellipseWidth, ellipseHeight);
-		}
+		// 	float ellipseWidth = (Math.abs(positionLeft.x - center.x)) * 2;
+		// 	float ellipseHeight = (Math.abs(positionTop.y - center.y)) * 2;
+
+		// 	ellipse(center.x, center.y, ellipseWidth, ellipseHeight);
+		// }
 	}
 }
 
 /*
-** Method to make the drone fly a line.
+** Method to make the drone fly a line
 */
 public void flyLine(ArrayList<PVector> currentPath) {
 	if (isFlying) 
@@ -369,6 +393,22 @@ public void flyLine(ArrayList<PVector> currentPath) {
 		drawBackground();
 		drawPreviousShapes();
 	}
+
+	else 
+	{
+		logMessage("Drone should be flying before you can execute a path");	
+	}
+}
+
+/*
+** Method to log messages to the user
+*/
+public void logMessage(String message)
+{
+	currentLogTime = millis();
+	logging = true;
+	textFont(createFont("Open Sans", 24));
+	text(message, screenWidth / 2, screenHeight - 100);
 }
 /*
 ** Class in which we provide access to the Parrot AR Drone 2.0.
