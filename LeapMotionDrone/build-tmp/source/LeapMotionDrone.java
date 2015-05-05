@@ -226,11 +226,6 @@ public void keyPressed()
 	}
 }
 
-public void mousePressed()
-{
-	println("qsklqsklsqkldmkskmdsfdmJFDIOIOREUIOREIURUORHJKFJHKDJHDFDFJHSJHKhjkjhkdffgjkfgjkhfgjhfgkjhfgjhkfgjkhfgjhkfgjhk");
-}
-
 /*
 ** Method to show the splash screen
 */
