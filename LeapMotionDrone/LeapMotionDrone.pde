@@ -204,7 +204,7 @@ void splash()
 		while(millis() < time + 500);
 
 		textAlign(CENTER, CENTER);
-		textFont(createFont("Open Sans", 56));
+		textFont(createFont("Open Sans", 56, true));
 		text("Leap Motion Drone", screenWidth / 2, screenHeight / 2 + 225);
 	}
 }
@@ -260,12 +260,14 @@ void drawBackground()
 /*
 ** Show the battery percentage on the screen
 */
+void showBattery() {
+	textFont(createFont("Open Sans", 72, true));
 void showBattery() 
 {
 	textFont(createFont("Open Sans", 72));
 	text("" + drone.getBattery(), screenWidth - 100, 100);
 
-	textFont(createFont("Open Sans", 15));
+	textFont(createFont("Open Sans", 15, true));
 	text("% battery", screenWidth - 100, 150);
 }
 
