@@ -278,13 +278,13 @@ void showControls()
 	PShape logo1 = loadShape("assets/buttonUp.svg");
 	shape(logo1, 100, screenHeight - 250, 100, 100);
 
-	PShape logo2 = loadShape("assets/buttonUp.svg");
+	PShape logo2 = loadShape("assets/buttonFlyLine.svg");
 	shape(logo2, 200, screenHeight - 250, 100, 100);
 
-	PShape logo3 = loadShape("assets/buttonUp.svg");
+	PShape logo3 = loadShape("assets/buttonDown.svg");
 	shape(logo3, 150, screenHeight - 150, 100, 100);
 
-	PShape logo4 = loadShape("assets/buttonUp.svg");
+	PShape logo4 = loadShape("assets/buttonErase.svg");
 	shape(logo4, 250, screenHeight - 150, 100, 100);
 }
 

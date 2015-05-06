@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 400 400" enable-background="new 0 0 400 400" xml:space="preserve">
+<circle fill="#E80C7A" cx="200" cy="200" r="153.9"/>
+<defs>
+	<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="136.9" y="140.1" width="135.8" height="107.7">
+		
+			<feColorMatrix  type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0" color-interpolation-filters="sRGB" result="source"/>
+		<feFlood  style="flood-color:white;flood-opacity:1" result="back"/>
+		<feBlend  in="source" in2="back" mode="normal"/>
+	</filter>
+</defs>
+<mask maskUnits="userSpaceOnUse" x="136.9" y="140.1" width="135.8" height="107.7" id="SVGID_1_">
+	<g filter="url(#Adobe_OpacityMaskFilter)">
+		<circle fill="#FFFFFF" cx="187.5" cy="164.9" r="6.5"/>
+		<circle fill="#FFFFFF" cx="250.5" cy="189.9" r="2.7"/>
+		<circle fill="#FFFFFF" cx="231.5" cy="170.9" r="2.7"/>
+		<circle fill="#FFFFFF" cx="220.5" cy="176.9" r="5.2"/>
+		<circle fill="#FFFFFF" cx="261.5" cy="170.9" r="6.5"/>
+		<circle fill="#FFFFFF" cx="144.5" cy="205.9" r="1.9"/>
+		<circle fill="#FFFFFF" cx="208.6" cy="190.1" r="4.1"/>
+		<circle fill="#FFFFFF" cx="224.6" cy="211.1" r="3.1"/>
+		<circle fill="#FFFFFF" cx="224.3" cy="236.6" r="2.1"/>
+		<circle fill="#FFFFFF" cx="174.3" cy="218.8" r="4.1"/>
+		<circle fill="#FFFFFF" cx="171.5" cy="192.9" r="8.6"/>
+		<circle fill="#FFFFFF" cx="240.8" cy="214.7" r="4.1"/>
+		<circle fill="#FFFFFF" cx="196.9" cy="218.8" r="7.5"/>
+		<circle fill="#FFFFFF" cx="217.3" cy="159.5" r="4.1"/>
+		<circle fill="#FFFFFF" cx="187" cy="146.9" r="2.4"/>
+	</g>
+</mask>
+<g mask="url(#SVGID_1_)">
+	<path fill="#FFFFFF" d="M270.7,172.5c-3.8-8.7-4.3-8.1-13.4-10.7c-9.1-2.7-11.3,5-20.4,2.4c-9.1-2.7-6.9-10.3-16-13
+		c-9.1-2.7-11.3,5-20.4,2.4c-9.1-2.7-9.5-16.1-18.4-12.9c-8.5,3.1-0.1,13.5-4.9,21.2c-4.8,7.7-11.6,3.4-16.4,11
+		c-4.8,7.7,2,11.9-2.8,19.6c-4.8,7.7-11.6,3.4-16.4,11c-4.8,7.7-6.2,7.5-2.6,15.8c3.8,8.6,4.5,7.8,13.7,10
+		c9.2,2.3,11.1-5.5,20.3-3.2c9.2,2.3,7.2,10,16.4,12.3c9.2,2.3,11.1-5.5,20.3-3.2c9.2,2.3,9.8,15.4,18.7,12.2
+		c8.2-2.9,0-13.2,4.8-20.5c4.7-7.3,11.4-2.9,16.2-10.2c4.7-7.3-2-11.6,2.8-18.9c4.7-7.3,9.7-3.3,15.7-9.6
+		C273.2,182.6,274.2,180.4,270.7,172.5z"/>
+</g>
+<path fill="none" stroke="#EEEEEE" stroke-width="7" stroke-miterlimit="10" d="M189,198.6"/>
+<path fill="none" stroke="#EEEEEE" stroke-width="7" stroke-miterlimit="10" d="M230.3,163"/>
+<path fill="none" stroke="#EEEEEE" stroke-width="7" stroke-miterlimit="10" d="M189,199.7"/>
+</svg>
