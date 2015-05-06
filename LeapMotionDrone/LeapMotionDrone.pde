@@ -41,8 +41,7 @@ int currentLogTime = 0;
 /*
 ** Setup method
 */ 
-void setup() 
-{
+void setup() {
 	// Global properties
 	screenWidth = displayWidth;
 	screenHeight = displayHeight - 22;
@@ -68,20 +67,18 @@ void setup()
 /*
 ** Draw method
 */
-void draw() 
-{
+void draw() {
 	if(splash)
 	{
-		if(!splashMove)
+		if(splashMove)
+		{
+			posX -= 5;
+		}
+		else
 		{
 			posX += 5;
 			posY += 5;
 		}
-		else
-		{
-			posX -= 5;
-		}
-
 		splash();
 	}
 
@@ -112,11 +109,10 @@ void draw()
 /*
 ** Method to detect key presses
 */
-void keyPressed() 
-{
+void keyPressed() {
 	// SPACE BAR: skip splash and start or stop drawing
 	if(keyCode == 32)
-	{
+	{         
 		if(!intro && !game && !splash)
 		{
 			background(#222222);
@@ -137,7 +133,7 @@ void keyPressed()
 			isDrawing = false;
 		}
 	}
-
+ 
 	// DOWN: reset drawing
 	else if(keyCode == DOWN)
 	{
@@ -169,7 +165,6 @@ void keyPressed()
 		drone.takeOff();
 		isFlying = true;
 	}
-
 	else if(keyCode == RIGHT)
 	{
 		logMessage("Drone landing");
@@ -182,8 +177,7 @@ void keyPressed()
 /*
 ** Method to show the splash screen
 */
-void splash() 
-{
+void splash() {
 	background(#266F97);
 
 	PShape logo = loadShape("assets/logo.svg");
@@ -192,15 +186,11 @@ void splash()
 	shape(hand, posX, posY, 300, 300);
 
 	// Check if hand reaches first or second position
-	if(posX == screenWidth / 2 + 65)
-	{
+	if(posX >= screenWidth / 2 + 65) {
 		splashMove = true;
 	}
-
-	else if(splashMove == true && posX <= screenWidth / 2 - 25)
-	{
+	if(splashMove && posX <= screenWidth / 2 - 25)	{
 		splash = false;
-
 		int time = millis();
 		while(millis() < time + 500);
 
@@ -213,8 +203,7 @@ void splash()
 /*
 ** Method to draw an on screen grid
 */ 
-void drawGrid()
-{
+void drawGrid() {
 	stroke(#266F97);
 	if (xLijnen <= 2 && yLijnen <= 3) 
 	{
@@ -250,8 +239,7 @@ void drawGrid()
 /*
 ** Draw the background grid as an image
 */
-void drawBackground() 
-{
+void drawBackground() {
 	if(bg != null)
 	{
 		image(bg, 0, 0);
@@ -261,8 +249,8 @@ void drawBackground()
 /*
 ** Show the battery percentage on the screen
 */
-void showBattery() 
-{
+void showBattery() {
+	// fill(#E80C7A);
 	textFont(createFont("Open Sans", 72, true));
 	text("" + drone.getBattery(), screenWidth - 100, 100);
 
@@ -273,8 +261,7 @@ void showBattery()
 /*
 ** Show the controls on the screen
 */
-void showControls()
-{
+void showControls() {
 	PShape logo1 = loadShape("assets/buttonUp.svg");
 	shape(logo1, 100, screenHeight - 250, 100, 100);
 
@@ -292,8 +279,7 @@ void showControls()
 /*
 ** Method to detect the position of the finger
 */
-void detectFingerPosition() 
-{
+void detectFingerPosition() {
 	if(isDrawing == true)
 	{
 		stroke(#EEEEEE);
@@ -333,8 +319,7 @@ void drawShape() {
 /*
 ** Method to draw the previously saved shapes on the screen
 */
-void drawPreviousShapes() 
-{
+void drawPreviousShapes() {
 	for(ArrayList<PVector> positionArray : positionArrays)
 	{
 		if(positionArray.size() > 2)
@@ -352,8 +337,7 @@ void drawPreviousShapes()
 /*
 ** Method to make the drone fly a line
 */
-void flyLine(ArrayList<PVector> currentPath) 
-{
+void flyLine(ArrayList<PVector> currentPath) {
 	if (isFlying) 
 	{
 		drone.move(currentPath);
@@ -372,8 +356,7 @@ void flyLine(ArrayList<PVector> currentPath)
 /*
 ** Method to log messages to the user
 */
-void logMessage(String message)
-{
+void logMessage(String message) {
 	currentLogTime = millis();
 	logging = true;
 	textFont(createFont("Open Sans", 24));
