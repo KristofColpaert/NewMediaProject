@@ -120,12 +120,12 @@ public void draw() {
 	{
 		if(splashMove)
 		{
-			posX -= 5;
+			posX -= 8;
 		}
 		else
 		{
-			posX += 5;
-			posY += 5;
+			posX += 8;
+			posY += 8;
 		}
 		splash();
 	}
@@ -386,7 +386,7 @@ public void drawPreviousShapes() {
 ** Method to make the drone fly a line
 */
 public void flyLine(ArrayList<PVector> currentPath) {
-	if (isFlying) 
+	if (isFlying)
 	{
 		drone.move(currentPath);
 

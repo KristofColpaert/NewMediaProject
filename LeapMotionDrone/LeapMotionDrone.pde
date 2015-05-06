@@ -72,12 +72,12 @@ void draw() {
 	{
 		if(splashMove)
 		{
-			posX -= 5;
+			posX -= 8;
 		}
 		else
 		{
-			posX += 5;
-			posY += 5;
+			posX += 8;
+			posY += 8;
 		}
 		splash();
 	}
@@ -189,7 +189,7 @@ void splash() {
 	if(posX >= screenWidth / 2 + 65) {
 		splashMove = true;
 	}
-	if(splashMove && posX <= screenWidth / 2 - 25)	{
+	if(splashMove && posX <= screenWidth / 2 - 25) {
 		splash = false;
 		int time = millis();
 		while(millis() < time + 500);
