@@ -95,6 +95,7 @@ void draw()
 		drone.hover();
 		detectFingerPosition();
 		showBattery();
+		showControls();
 		drawShape();
 	}
 
@@ -122,14 +123,14 @@ void keyPressed()
 			intro = true;
 		}
 
-		else if(!isDrawing && game)
+		else if(!isDrawing && game && leapMotion == null)
 		{
 			leapMotion = new LeapMotion(this);
 			leapMotion.startDrawing();
 			isDrawing = true;
 		}
 
-		else if(isDrawing && game)
+		else if(isDrawing && game && leapMotion != null)
 		{
 			leapMotion.stopDrawing();
 			leapMotion = null;
@@ -260,16 +261,33 @@ void drawBackground()
 /*
 ** Show the battery percentage on the screen
 */
-void showBattery() {
-	textFont(createFont("Open Sans", 72, true));
 void showBattery() 
 {
-	textFont(createFont("Open Sans", 72));
+	textFont(createFont("Open Sans", 72, true));
 	text("" + drone.getBattery(), screenWidth - 100, 100);
 
 	textFont(createFont("Open Sans", 15, true));
 	text("% battery", screenWidth - 100, 150);
 }
+
+/*
+** Show the controls on the screen
+*/
+void showControls()
+{
+	PShape logo1 = loadShape("assets/buttonUp.svg");
+	shape(logo1, 100, screenHeight - 250, 100, 100);
+
+	PShape logo2 = loadShape("assets/buttonUp.svg");
+	shape(logo2, 200, screenHeight - 250, 100, 100);
+
+	PShape logo3 = loadShape("assets/buttonUp.svg");
+	shape(logo3, 150, screenHeight - 150, 100, 100);
+
+	PShape logo4 = loadShape("assets/buttonUp.svg");
+	shape(logo4, 250, screenHeight - 150, 100, 100);
+}
+
 
 /*
 ** Method to detect the position of the finger
