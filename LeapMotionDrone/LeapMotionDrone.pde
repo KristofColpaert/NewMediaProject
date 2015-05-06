@@ -338,7 +338,7 @@ void drawPreviousShapes() {
 ** Method to make the drone fly a line
 */
 void flyLine(ArrayList<PVector> currentPath) {
-	if (isFlying) 
+	if (isFlying)
 	{
 		drone.move(currentPath);
 

@@ -93,7 +93,7 @@ class Drone
 	{
 		try
 		{
-			commandManager.landing();
+			commandManager.landing(); 
 		}
 
 		catch(Exception ex)
