@@ -237,7 +237,7 @@ public void splash() {
 	if(posX >= screenWidth / 2 + 65) {
 		splashMove = true;
 	}
-	if(splashMove && posX <= screenWidth / 2 - 25)	{
+	if(splashMove && posX <= screenWidth / 2 - 25) {
 		splash = false;
 		int time = millis();
 		while(millis() < time + 500);
@@ -300,7 +300,8 @@ public void drawBackground() {
 public void showBattery() {
 	// fill(#E80C7A);
 	textFont(createFont("Open Sans", 72, true));
-	text("" + drone.getBattery(), screenWidth - 100, 100);
+	//text("" + drone.getBattery(), screenWidth - 100, 100);
+	text("" + 45, screenWidth - 100, 100);
 
 	textFont(createFont("Open Sans", 15, true));
 	text("% battery", screenWidth - 100, 150);
